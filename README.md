@@ -12,7 +12,6 @@
 - Familiarity with handling files in Python, especially reading from PDFs.
 - Basic understanding of natural language processing (NLP) concepts, particularly text embeddings.
 - Prior experience with conversational AI concepts or tools will be beneficial but not necessary.
-- Access to an OpenAI API key for using embedding models.
 
 ## Lab Description:
 This lab involves building a backend application for text retrieval and conversation handling. You will extract text from PDFs, split the text into manageable chunks, embed these chunks for efficient retrieval, and create a conversational interface that responds to user queries by referencing the text data.
@@ -30,17 +29,6 @@ or
 ```bash
 pip3 install -r requirements.txt
 ```
-
-3. Set up your OpenAI API key:
-  - Create a file named .env in the root of your project directory (same level as your src folder).
-  - Open the .env file and add the following line:
-
-```
-OPENAI_API_KEY=your_api_key_here
-```
-
-  - Replace your_api_key_here with your actual OpenAI API key.
-  - Save the file.
 
 ## Lab Overview
 In this lab, you will delve into the world of LangChain, focusing on extracting text from PDF documents, processing this text for embedding, and integrating it into a conversational AI interface. You will begin by setting up your environment, including managing API keys securely. Then, you will embark on a journey of embedding text data and utilizing it for conversational purposes. The core of this lab involves implementing functions to extract text from a PDF, split it into manageable chunks, embed these chunks for efficient retrieval, and create a conversational interface that can respond to queries based on the embedded text data.
@@ -66,29 +54,14 @@ Implement get_pdf_text: This function should take a list of PDF file paths, extr
 
 Implement get_text_chunks: Split the raw text into smaller chunks for efficient processing. Use CharacterTextSplitter or a similar mechanism to divide the text.
 
-Implement get_vector_store: Convert the text chunks into embeddings using OpenAIEmbeddings and store these in a FAISS vector store for fast retrieval.
+Implement get_vector_store: Convert the text chunks into embeddings using HuggingFaceEmbeddings and store these in a FAISS vector store for fast retrieval.
 
-Implement get_conversation_chain: Create a conversation chain using ChatOpenAI for the chat model and the previously created vector store for data retrieval.
+Implement get_conversation_chain: Create a conversation chain using HuggingFace for the chat model and the previously created vector store for data retrieval.
 
 ### Completion Criteria:
 - Complete the 'TODO' methods as outlined in the lab documents.
 - To successfully finish the lab, pass all tests in the tests/test_lab.py file.
-- Run the application or tests using your editor, or use the provided run scripts.
-
-### Running Scripts
-To run a shell script in Unix/Linux/Mac environments, use the command:
-
-```
-./run_script.sh
-````
-
-Make sure the script has execute permissions. If not, run chmod +x run_script.sh first.
-
-To run a batch script in Windows, simply execute:
-
-```
-run_script.bat
-```
+- Run the application or tests using your editor
 
 ## Support
 - For technical issues or detailed understanding, consult the [LangChain documentation](https://python.langchain.com/docs/get_started/introduction).

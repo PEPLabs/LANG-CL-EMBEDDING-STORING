@@ -7,12 +7,14 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.conversational_retrieval.base import (
     BaseConversationalRetrievalChain,
 )
-from langchain.chat_models import ChatOpenAI
-from langchain.embeddings import OpenAIEmbeddings
+
 from langchain.memory import ConversationBufferMemory
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
 from PyPDF2 import PdfReader
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
+
 
 # ------------------------------------------------------------------------------
 # TODO Functions - Implement the logic as per instructions
@@ -73,11 +75,11 @@ def get_vector_store(text_chunks: List[str]) -> FAISS:
     TODO: Implement this method to convert the text chunks into embeddings and store these in a FAISS vector store.
 
     Instructions:
-    - Initialize OpenAIEmbeddings to convert text chunks into embeddings.
+    - Initialize HuggingFaceEmbeddings to convert text chunks into embeddings.
     - Use FAISS to create a vector store from these embeddings.
     - Configure with appropriate parameters like texts and embedding.
         - texts: The list of text chunks to be converted into embeddings.
-        - embedding: The OpenAIEmbeddings instance to be used for converting text into embeddings.
+        - embedding: The HuggingFaceEmbeddings instance to be used for converting text into embeddings.
     - Return the FAISS vector store containing the embeddings.
 
     Parameters:
@@ -95,7 +97,7 @@ def get_conversation_chain(vector_store: FAISS) -> BaseConversationalRetrievalCh
     Initializes and returns a ConversationalRetrievalChain. This chain integrates a language model
     and a vector store for handling conversational queries and retrieving relevant information.
 
-    - Initializes a ChatOpenAI model with a fixed response pattern (temperature=0).
+    - Initializes a HuggingFaceEndpoint model.
     - Sets up a ConversationBufferMemory to store and manage conversation history.
     - The ConversationalRetrievalChain combines these components, using the vector store for
       efficient information retrieval based on user queries.
@@ -106,8 +108,12 @@ def get_conversation_chain(vector_store: FAISS) -> BaseConversationalRetrievalCh
     Returns:
     BaseConversationalRetrievalChain: A conversational chain ready for handling queries.
     """
-    llm = ChatOpenAI(
-        temperature=0  # Feel free to change the temperature setting. Closer to 0 is more deterministic while closer to 1 is more random.
+    llm = HuggingFaceEndpoint(
+        endpoint_url=os.environ['LLM_ENDPOINT'],
+        task="text2text-generation",
+        model_kwargs={
+            "max_new_tokens": 200
+        }
     )
 
     # Set up memory buffer for the conversation chain
@@ -141,8 +147,6 @@ def clear_screen():
 
 # Main application function
 def main():
-    # Load environment variables from .env file
-    load_dotenv()
 
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))

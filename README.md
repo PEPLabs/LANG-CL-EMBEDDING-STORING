@@ -54,9 +54,9 @@ Implement get_pdf_text: This function should take a list of PDF file paths, extr
 
 Implement get_text_chunks: Split the raw text into smaller chunks for efficient processing. Use CharacterTextSplitter or a similar mechanism to divide the text.
 
-Implement get_vector_store: Convert the text chunks into embeddings using OpenAIEmbeddings and store these in a FAISS vector store for fast retrieval.
+Implement get_vector_store: Convert the text chunks into embeddings using HuggingFaceEmbeddings and store these in a FAISS vector store for fast retrieval.
 
-Implement get_conversation_chain: Create a conversation chain using ChatOpenAI for the chat model and the previously created vector store for data retrieval.
+Implement get_conversation_chain: Create a conversation chain using HuggingFace for the chat model and the previously created vector store for data retrieval.
 
 ### Completion Criteria:
 - Complete the 'TODO' methods as outlined in the lab documents.

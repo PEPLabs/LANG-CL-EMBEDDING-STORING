@@ -13,6 +13,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
 from PyPDF2 import PdfReader
+from langchain_community.llms.huggingface_endpoint import HuggingFaceEndpoint
+
 
 # ------------------------------------------------------------------------------
 # TODO Functions - Implement the logic as per instructions
@@ -106,7 +108,12 @@ def get_conversation_chain(vector_store: FAISS) -> BaseConversationalRetrievalCh
     Returns:
     BaseConversationalRetrievalChain: A conversational chain ready for handling queries.
     """
-    llm = ChatOpenAI(
+    llm = HuggingFaceEndpoint(
+        endpoint_url=os.environ['LLM_ENDPOINT'],
+        task="text2text-generation",
+        model_kwargs={
+            "max_new_tokens": 200
+        },
         temperature=0  # Feel free to change the temperature setting. Closer to 0 is more deterministic while closer to 1 is more random.
     )
 
@@ -141,8 +148,6 @@ def clear_screen():
 
 # Main application function
 def main():
-    # Load environment variables from .env file
-    load_dotenv()
 
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))

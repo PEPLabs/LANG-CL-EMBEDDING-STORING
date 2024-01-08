@@ -1,7 +1,6 @@
 import os
 import unittest
 
-from dotenv import load_dotenv
 from langchain.vectorstores import FAISS
 from langchain_core.outputs import LLMResult
 

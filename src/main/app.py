@@ -2,7 +2,6 @@
 import os
 from typing import List
 
-from dotenv import load_dotenv
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.conversational_retrieval.base import (
     BaseConversationalRetrievalChain,

@@ -5,3 +5,5 @@ huggingface_hub
 transformers
 jinja2
 langchain-community
+sentence-transformers
+faiss-cpu
